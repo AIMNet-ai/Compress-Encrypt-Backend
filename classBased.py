@@ -89,20 +89,23 @@ class Huffboth():
                 codeIt(s+"1", node.right)
 
         codeIt("", itemqueue[0])
+        print(f'Encoded : {"".join([self.codes[a] for a in input])}')
         return "".join([self.codes[a] for a in input])
 
     def Decode(self, s):
         root = self.root
         current = root
         result = ''
+        print(s)
         for code in s:
             if int(code) == 0:
                 current = current.left
             else:
                 current = current.right
             if current.left == None and current.right == None:
-                result += current.item
+                result += str(current.item)
                 current = root
+        print(f"Decoded: {result}")
         return result
 
     def getTree(self):

@@ -2,7 +2,10 @@ from flask import Flask, request, jsonify, send_file, request
 from werkzeug.utils import secure_filename
 import os
 import classBased as cb
+import huffmanFiles as hfile
 import json
+import uuid
+
 hf = cb.Huffboth()
 
 decode_dir = 'decoded'
@@ -65,17 +68,23 @@ def huffmanTextDecode():
 @app.route('/api/upload-normal-file', methods=["POST"])
 def uploadNormalFile():
     if request.method == 'POST':
+        fileID = uuid.uuid4()
         f = request.files['file']
-        f.save(os.path.join(decode_dir, secure_filename(f.filename)))
+        f.save(os.path.join(decode_dir, f"{fileID}.txt"))
+
+        hfile.encodeHuffFile(fileID)
         return 'normal file uploaded successfully'
+
     return "Normal File Upload Route"
 
 
 @app.route('/api/upload-encoded-compressed-file', methods=["POST"])
-def getEncodedCompressedFile():
+def uploadEncodedCompressedFile():
     if request.method == 'POST':
+        fileID = uuid.uuid4()
         f = request.files['file']
-        f.save(os.path.join(encodedCompressed_dir, secure_filename(f.filename)))
+        f.save(os.path.join(encodedCompressed_dir, f"{fileID}.bin"))
+        hfile.decodeHuffFile(fileID)
         return 'binary file uploaded successfully'
     return "Binary File Upload Route"
 
@@ -95,8 +104,8 @@ def getEncodedCompressedFile(ID):
     return send_file(filename, mimetype='image/png')
 
 
-@app.route('/encoded-compressed/<ID>')
-def getEncodedCompressedFile(ID):
+@app.route('/encoded-uncompressed/<ID>')
+def getEncodedUnompressedFile(ID):
     filename = f'{encodedUncompressed_dir}/image-{ID}.png'
     return send_file(filename, mimetype='image/png')
 

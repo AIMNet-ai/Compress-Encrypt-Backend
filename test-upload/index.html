@@ -1,8 +1,15 @@
 <html>
 
 <body>
-    <form enctype="multipart/form-data" action="http://localhost:5000/encoded-uncompressed" method="post">
-        <p>File: <input type="file" name="file" /></p>
+    <h2>File Compression Here</h2>
+    <form enctype="multipart/form-data" action="http://localhost:5000/api/upload-normal-file" method="post">
+        <p>Text File Only: <input type="file" name="file" /></p>
+        <p><input type="submit" value="Upload" /></p>
+    </form>
+    <hr>
+    <h2>File Decompression Here</h2>
+    <form enctype="multipart/form-data" action="http://localhost:5000/api/upload-encoded-compressed-file" method="post">
+        <p>Binary Compressed file Only: <input type="file" name="file" /></p>
         <p><input type="submit" value="Upload" /></p>
     </form>
 </body>

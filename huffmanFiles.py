@@ -1,15 +1,9 @@
 import os
 import classBased as cb
 Huffboth = cb.Huffboth()
-
+"""
 file = "sample-file.txt"
 
-
-def _to_Bytes(data):
-    b = bytearray()
-    for i in range(0, len(data), 8):
-        b.append(int(data[i:i+8], 2))
-    return bytes(b)
 
 
 with open(file, 'rb') as r:
@@ -33,10 +27,18 @@ with open(file, 'rb') as r:
         round((((_o-_c)/_o)*100), 0)))
     fileOP.close()
 
-#####################################################################33
+"""
+
+
+def _to_Bytes(data):
+    b = bytearray()
+    for i in range(0, len(data), 8):
+        b.append(int(data[i:i+8], 2))
+    return bytes(b)
+
 
 def encodeHuffFile(fileID):
-    ip_file = f'decode/{fileID}.txt'
+    ip_file = f'decoded/{fileID}.txt'
     op_file = f'encodedCompressed/{fileID}.bin'
     with open(ip_file, 'rb') as r:
         content = r.read()
@@ -61,18 +63,17 @@ def encodeHuffFile(fileID):
 
 
 def decodeHuffFile(fileID):
-    op_file = f'decode/{fileID}.txt'
+    op_file = f'decoded/{fileID}.txt'
     ip_file = f'encodedCompressed/{fileID}.bin'
     with open(ip_file, 'rb') as r:
         content = r.read()
-        encoded_text = Huffboth.Decode(str(content))
 
-        decoded_text = Huffboth.Decode(encoded_text)
-        if(str(content) == decoded_text):
-            print("File Compression and Decompression Sucessful!")
-        else:
-            print("Failed!")
-        
+        decoded_text = Huffboth.Decode(content)
+        # if(str(content) == decoded_text):
+        #     print("File Compression and Decompression Sucessful!")
+        # else:
+        #     print("Failed!")
+
         fileOP = open(op_file, "wb")
         fileOP.write(_to_Bytes(decoded_text))
         fileOP.close()
