@@ -1,0 +1,16 @@
+POST http://localhost:5000/api/huffman-text-encode
+content-type: application/json
+
+{
+    "payload": "aababcabcd"
+}
+###
+POST http://localhost:5000/api/huffman-text-decode
+content-type: application/json
+
+{
+    "payload": "0010010111010111110"
+}
+####
+0010010111010111110
+aababcabcd
