@@ -1,4 +1,8 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, request
+import classBased as cb
+import json
+hf = cb.Huffboth()
+
 app = Flask(__name__)
 
 ###############################################################
@@ -22,17 +26,27 @@ def index3():
 ###############################################################
 
 
-@app.route("/api/huffman-text-encode")
+@app.route("/api/huffman-text-encode", methods=["POST"])
 def huffmanTextEncode():
+    # print(request.get_json())
+    obj = request.get_json()
+    input = obj["payload"]
+    # print(input)
+    encoded = hf.Encode(input)
     return jsonify({
-        "title": "Huffman Text Encode",
+        "title": encoded,
     })
 
 
-@app.route("/api/huffman-text-decode")
+@app.route("/api/huffman-text-decode", methods=["POST"])
 def huffmanTextDecode():
+    # print(request.get_json())
+    obj = request.get_json()
+    input = obj["payload"]
+    # print(input)
+    decoded = hf.Decode(input)
     return jsonify({
-        "title": "Huffman Text Decode",
+        "title": decoded,
     })
 
 
@@ -55,5 +69,6 @@ def getEncodedCompressedFile(ID):
 
 
 if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
+    app.config['ENV'] = 'development'
+    app.config['DEBUG'] = True
+    app.run(threaded=True, port=5000, debug=True)
