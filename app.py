@@ -12,6 +12,7 @@ encodedUncompressed_dir = 'encodedUncompressed'
 app = Flask(__name__)
 
 ###############################################################
+# Test Routes
 
 
 @app.route('/')
@@ -29,7 +30,9 @@ def index3():
     return jsonify({
         "home": "This is home sweet home",
     })
+
 ###############################################################
+# Text Compression Decompression Routes
 
 
 @app.route("/api/huffman-text-encode", methods=["POST"])
@@ -56,6 +59,7 @@ def huffmanTextDecode():
     })
 
 ###############################################################
+# File Upload routes for normal and binary files
 
 
 @app.route('/api/upload-normal-file', methods=["POST"])
@@ -76,20 +80,28 @@ def getEncodedCompressedFile():
     return "Binary File Upload Route"
 
 ###############################################################
+# Get the files by ID
 
 
 @app.route('/decoded/<ID>')
 def getDecodedFile(ID):
-    filename = f'uploads/image-{ID}.png'
+    filename = f'{decode_dir}/image-{ID}.png'
     return send_file(filename, mimetype='image/png')
 
 
 @app.route('/encoded-compressed/<ID>')
 def getEncodedCompressedFile(ID):
-    filename = f'uploads/image-{ID}.png'
+    filename = f'{encodedCompressed_dir}/image-{ID}.png'
     return send_file(filename, mimetype='image/png')
 
 
+@app.route('/encoded-compressed/<ID>')
+def getEncodedCompressedFile(ID):
+    filename = f'{encodedUncompressed_dir}/image-{ID}.png'
+    return send_file(filename, mimetype='image/png')
+
+
+#################################################################
 if __name__ == '__main__':
     app.config['ENV'] = 'development'
     app.config['DEBUG'] = True
