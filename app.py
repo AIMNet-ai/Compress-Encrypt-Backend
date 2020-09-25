@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify, send_file, request
+from werkzeug.utils import secure_filename
+import os
 import classBased as cb
 import json
 hf = cb.Huffboth()
 
+uploads_dir = 'decoded'
 app = Flask(__name__)
 
 ###############################################################
@@ -49,11 +52,21 @@ def huffmanTextDecode():
         "output": decoded,
     })
 
-#################################################3
-@app.route('/encoded-uncompressed/<ID>')
-def getEncodedUncompressedFile(ID):
-    filename = f'uploads/image-{ID}.png'
-    return send_file(filename, mimetype='image/png')
+# 3
+
+
+@app.route('/encoded-uncompressed', methods=["POST"])
+def getEncodedUncompressedFile():
+    # print(request.files)
+    # filename = f'uploads/image-{ID}.png'
+    # return send_file(filename, mimetype='image/png')
+    if request.method == 'POST':
+        f = request.files['file']
+        print(f)
+        f.save(os.path.join(uploads_dir, secure_filename(f.filename)))
+
+        return 'file uploaded successfully'
+    return "NORMAL"
 
 
 @app.route('/decoded/<ID>')
