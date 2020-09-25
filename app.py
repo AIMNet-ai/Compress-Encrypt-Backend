@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
+###############################################################
+
 
 @app.route('/')
 def index():
@@ -16,6 +18,21 @@ def index2():
 def index3():
     return jsonify({
         "home": "This is home sweet home",
+    })
+###############################################################
+
+
+@app.route("/api/huffman-text-encode")
+def huffmanTextEncode():
+    return jsonify({
+        "title": "Huffman Text Encode",
+    })
+
+
+@app.route("/api/huffman-text-decode")
+def huffmanTextDecode():
+    return jsonify({
+        "title": "Huffman Text Decode",
     })
 
 
