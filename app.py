@@ -34,7 +34,7 @@ def huffmanTextEncode():
     # print(input)
     encoded = hf.Encode(input)
     return jsonify({
-        "title": encoded,
+        "output": encoded,
     })
 
 
@@ -46,10 +46,10 @@ def huffmanTextDecode():
     # print(input)
     decoded = hf.Decode(input)
     return jsonify({
-        "title": decoded,
+        "output": decoded,
     })
 
-
+#################################################3
 @app.route('/encoded-uncompressed/<ID>')
 def getEncodedUncompressedFile(ID):
     filename = f'uploads/image-{ID}.png'
