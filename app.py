@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 app = Flask(__name__)
 
 ###############################################################
@@ -34,6 +34,24 @@ def huffmanTextDecode():
     return jsonify({
         "title": "Huffman Text Decode",
     })
+
+
+@app.route('/encoded-uncompressed/<ID>')
+def getEncodedUncompressedFile(ID):
+    filename = f'uploads/image-{ID}.png'
+    return send_file(filename, mimetype='image/png')
+
+
+@app.route('/decoded/<ID>')
+def getDecodedFile(ID):
+    filename = f'uploads/image-{ID}.png'
+    return send_file(filename, mimetype='image/png')
+
+
+@app.route('/encoded-compressed/<ID>')
+def getEncodedCompressedFile(ID):
+    filename = f'uploads/image-{ID}.png'
+    return send_file(filename, mimetype='image/png')
 
 
 if __name__ == '__main__':
