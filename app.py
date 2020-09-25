@@ -5,7 +5,10 @@ import classBased as cb
 import json
 hf = cb.Huffboth()
 
-uploads_dir = 'decoded'
+decode_dir = 'decoded'
+encodedCompressed_dir = 'encodedCompressed'
+encodedUncompressed_dir = 'encodedUncompressed'
+
 app = Flask(__name__)
 
 ###############################################################
@@ -52,21 +55,27 @@ def huffmanTextDecode():
         "output": decoded,
     })
 
-# 3
+###############################################################
 
 
-@app.route('/encoded-uncompressed', methods=["POST"])
-def getEncodedUncompressedFile():
-    # print(request.files)
-    # filename = f'uploads/image-{ID}.png'
-    # return send_file(filename, mimetype='image/png')
+@app.route('/api/upload-normal-file', methods=["POST"])
+def uploadNormalFile():
     if request.method == 'POST':
         f = request.files['file']
-        print(f)
-        f.save(os.path.join(uploads_dir, secure_filename(f.filename)))
+        f.save(os.path.join(decode_dir, secure_filename(f.filename)))
+        return 'normal file uploaded successfully'
+    return "Normal File Upload Route"
 
-        return 'file uploaded successfully'
-    return "NORMAL"
+
+@app.route('/api/upload-encoded-compressed-file', methods=["POST"])
+def getEncodedCompressedFile():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save(os.path.join(encodedCompressed_dir, secure_filename(f.filename)))
+        return 'binary file uploaded successfully'
+    return "Binary File Upload Route"
+
+###############################################################
 
 
 @app.route('/decoded/<ID>')
