@@ -1,3 +1,4 @@
+from flask_cors import CORS
 from flask import Flask, request, jsonify, send_file, request
 from werkzeug.utils import secure_filename
 import os
@@ -7,12 +8,12 @@ import json
 import uuid
 
 hf = cb.Huffboth()
-
 decode_dir = 'decoded'
 encodedCompressed_dir = 'encodedCompressed'
 encodedUncompressed_dir = 'encodedUncompressed'
 
 app = Flask(__name__)
+CORS(app)
 
 ###############################################################
 # Test Routes
@@ -61,6 +62,13 @@ def huffmanTextDecode():
         "output": decoded,
     })
 
+
+@app.route("/api/get-tree", methods=["GET"])
+def sendHuffmanTree():
+    tree = hf.getTree()
+    return jsonify({
+        "tree": tree,
+    })
 ###############################################################
 # File Upload routes for normal and binary files
 
