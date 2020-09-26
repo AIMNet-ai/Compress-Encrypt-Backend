@@ -45,9 +45,15 @@ def huffmanTextEncode():
     obj = request.get_json()
     input = obj["payload"]
     # print(input)
+    inputSize = len(input) * 8
     encoded = hf.Encode(input)
+    outputSize = len(encoded)
+    compressionRatio = inputSize/outputSize
     return jsonify({
         "output": encoded,
+        'inputSize': inputSize,
+        "outputSize": outputSize,
+        "compressionRatio": compressionRatio
     })
 
 
@@ -56,10 +62,16 @@ def huffmanTextDecode():
     # print(request.get_json())
     obj = request.get_json()
     input = obj["payload"]
+    inputSize = len(input)
     # print(input)
     decoded = hf.Decode(input)
+    outputSize = len(decoded) * 8
+    compressionRatio = inputSize/outputSize
     return jsonify({
         "output": decoded,
+        'inputSize': inputSize,
+        "outputSize": outputSize,
+        "compressionRatio": compressionRatio
     })
 
 
