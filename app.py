@@ -55,7 +55,7 @@ def huffmanTextEncode():
         'inputSize': inputSize,
         "outputSize": outputSize,
         "tree": tree,
-        "compressionRatio": compressionRatio
+        "compressionRatio": round(compressionRatio, 2)
     })
 
 
@@ -74,7 +74,7 @@ def huffmanTextDecode():
         "output": decoded,
         'inputSize': inputSize,
         "outputSize": outputSize,
-        "compressionRatio": compressionRatio,
+        "compressionRatio": round(compressionRatio, 2),
         "tree": tree,
     })
 
