@@ -48,11 +48,13 @@ def huffmanTextEncode():
     inputSize = len(input) * 8
     encoded = hf.Encode(input)
     outputSize = len(encoded)
+    tree = hf.getTree()
     compressionRatio = inputSize/outputSize
     return jsonify({
         "output": encoded,
         'inputSize': inputSize,
         "outputSize": outputSize,
+        "tree": tree,
         "compressionRatio": compressionRatio
     })
 
@@ -65,13 +67,15 @@ def huffmanTextDecode():
     inputSize = len(input)
     # print(input)
     decoded = hf.Decode(input)
+    tree = hf.getTree()
     outputSize = len(decoded) * 8
     compressionRatio = inputSize/outputSize
     return jsonify({
         "output": decoded,
         'inputSize': inputSize,
         "outputSize": outputSize,
-        "compressionRatio": compressionRatio
+        "compressionRatio": compressionRatio,
+        "tree": tree,
     })
 
 
